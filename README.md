@@ -31,14 +31,14 @@ This repository contains PowerShell automation scripts that collect Microsoft Te
 ### Inputs
 | Type | Name/Route | Description |
 |------|-----------|-------------|
-| Parameter | `luClientId` | LoopUp API client ID (OAuth2) |
-| Parameter | `luClientSecret` | LoopUp API client secret (OAuth2) |
-| Parameter | `luCustomerId` | LoopUp customer identifier |
-| Parameter | `filterOVRP` | Optional OnlineVoiceRoutingPolicy filter to scope DDI collection |
-| Parameter | `luServiceAccountUsername` | Microsoft Teams service account username (on-premises variant) |
-| Parameter | `identityEndpointUrl` | Override for LoopUp identity service URL (default: `https://identity.loopup.com`) |
-| Parameter | `ddiEndpointUrl` | Override for LoopUp DDI API URL (default: `https://ctda.loopup.com`) |
-| MS Teams | `Get-CsOnlineUser` | Queries all enterprise-voice-enabled users with assigned DDIs from the customer's Teams tenant |
+| Automation credential | `LoopUpServiceAccountCredentials` | Azure Automation credential asset that stores the Microsoft Teams service account username/password used by the runbook via `Get-AutomationPSCredential`. |
+| Automation variable | `LoopUpClientId` | LoopUp API client ID retrieved with `Get-AutomationVariable` in Azure Automation and passed as a parameter when running the on-premises script. |
+| Automation variable | `LoopUpClientSecret` | LoopUp API client secret sourced from an Automation variable (or parameterized in the on-premises task) before requesting an OAuth2 token. |
+| Automation variable | `LoopUpCustomerId` | LoopUp customer identifier stored as an Automation variable and forwarded to the common script. |
+| Automation variable (optional) | `filterOVRP` | Optional OnlineVoiceRoutingPolicy filter kept as an Automation variable and supplied to the common script (also accepted as an optional parameter on-premises). |
+| SecretManagement secret | `LoopUpHostedBillingScript.connection` | On-premises deployment retrieves the Teams password from this SecretManagement vault entry via `Get-Secret` prior to `Connect-MicrosoftTeams`. |
+| Parameter (on-premises only) | `luServiceAccountUsername` | Username passed to the on-premises scheduled task; Azure Automation instead reads it from the credential asset. |
+| MS Teams | `Get-CsOnlineUser` | Queries all enterprise-voice-enabled users with assigned DDIs from the customer's Teams tenant. |
 
 ### Outputs
 | Type | Name | Description |
