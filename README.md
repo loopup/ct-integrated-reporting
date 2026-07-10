@@ -58,11 +58,11 @@ LoopUp Hosted Billing Script
 
 **Commercial / GCC tenants:**
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Floopup%2Fct-integrated-reporting%2Fmain%2Fscripts%2FAzure%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Floopup%2Fct-integrated-reporting%2Ffeat%2Fgcc-high-dod-support%2Fscripts%2FAzure%2Fazuredeploy.json)
 
 **GCC High / DoD tenants (Azure Government):**
 
-[![Deploy to Azure Gov](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazuregov.svg?sanitize=true)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Floopup%2Fct-integrated-reporting%2Fmain%2Fscripts%2FAzure%2Fazuredeploy.json)
+[![Deploy to Azure Gov](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazuregov.svg?sanitize=true)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Floopup%2Fct-integrated-reporting%2Ffeat%2Fgcc-high-dod-support%2Fscripts%2FAzure%2Fazuredeploy.json)
 
 ## Deploying in GCC High / DoD (US Government clouds)
 

@@ -126,7 +126,7 @@
             "name": "SelfHostedDdiConfigurationReporting-Schedule"
         },
         "luScripts": {
-            "url": "https://raw.githubusercontent.com/loopup/ct-integrated-reporting/main/scripts/Azure/SelfHostedDdiConfigurationReporting.ps1",
+            "url": "https://raw.githubusercontent.com/loopup/ct-integrated-reporting/feat/gcc-high-dod-support/scripts/Azure/SelfHostedDdiConfigurationReporting.ps1",
             "description": "Runbook to deploy LoopUp Cloud Telephony hosted billing script to customers Azure tenant."
         },
         "MicrosoftTeams": {
