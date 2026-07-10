@@ -11,21 +11,35 @@ Param
 
 # Teams DDI data
 Write-Host "Getting DDIs from Teams"
-if ($filterOVRP -eq "N/A" -or $filterOVRP -eq "") {
-   $billingData = Get-CsOnlineUser | Where-Object {
-      $_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')
-      } | Select-Object @{
-         Name='ddi'; Expression={$_.LineURI.ToLower().replace("tel:","")}
-      }, @{
-         Name='onlineVoiceRoutingPolicy'; Expression={$_.OnlineVoiceRoutingPolicy}}
-} else {
-   $billingData = Get-CsOnlineUser | Where-Object {
-      $_.EnterpriseVoiceEnabled -like '*True*' -and ($_.OnlineVoiceRoutingPolicy -like "*$filterOVRP*") -and ($_.LineUri -notlike '')
-      } | Select-Object @{
-         Name='ddi'; Expression={$_.LineURI.ToLower().replace("tel:","")}
-      }, @{
-         Name='onlineVoiceRoutingPolicy'; Expression={$_.OnlineVoiceRoutingPolicy}}
+
+# Filter server-side so only enterprise voice users with a number are downloaded, rather than every user in the tenant
+$evUserFilter = 'EnterpriseVoiceEnabled -eq $true -and LineUri -ne $null'
+try {
+   if ((Get-Command Get-CsOnlineUser).Parameters.ContainsKey('Properties')) {
+      $enterpriseVoiceUsers = Get-CsOnlineUser -Filter $evUserFilter -Properties "LineUri, OnlineVoiceRoutingPolicy"
+   } else {
+      $enterpriseVoiceUsers = Get-CsOnlineUser -Filter $evUserFilter
+   }
+} catch {
+   # Older MicrosoftTeams modules may reject the server-side filter
+   Write-Host "Server-side filtering unavailable, falling back to client-side filtering"
+   $enterpriseVoiceUsers = Get-CsOnlineUser | Where-Object {
+      $_.EnterpriseVoiceEnabled -like '*True*'
+   }
 }
+
+if (-not ($filterOVRP -eq "N/A" -or $filterOVRP -eq "")) {
+   $enterpriseVoiceUsers = $enterpriseVoiceUsers | Where-Object {
+      $_.OnlineVoiceRoutingPolicy -like "*$filterOVRP*"
+   }
+}
+
+$billingData = $enterpriseVoiceUsers | Where-Object {
+   $_.LineUri -notlike ''
+   } | Select-Object @{
+      Name='ddi'; Expression={$_.LineURI.ToLower().replace("tel:","")}
+   }, @{
+      Name='onlineVoiceRoutingPolicy'; Expression={$_.OnlineVoiceRoutingPolicy}}
 
 # LoopUp Authentication
 Write-Host "Authenticating LoopUp client ID & Secret"
